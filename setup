@@ -1,0 +1,11 @@
+# run docker network ls | grep nginx-proxy-manager-managed-network and see if it exists, if it does, skip the next command
+if [ -z "$(docker network ls | grep nginx-proxy-manager-managed-network)" ]; then
+  docker network create nginx-proxy-manager-managed-network
+fi
+
+# If using docker-compose is executable, use it, otherwise use docker compose
+if [ -x "$(command -v docker-compose)" ]; then
+  docker-compose up -d
+  exit 0
+fi
+docker compose up -d
